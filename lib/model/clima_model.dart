@@ -27,4 +27,7 @@ class ClimaData {
         icon: json['weather'][0]['icon'],
         humidity: json['main']['humidity'].toInt());
   }
+  static List<ClimaData> listFromJsonArray(List<dynamic> list) {
+    return list.map<ClimaData>((json) => ClimaData.fromJson(json)).toList();
+  }
 }

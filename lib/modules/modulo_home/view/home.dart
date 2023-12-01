@@ -34,28 +34,34 @@ class HomeView extends GetView<HomeController> {
                 ),
               ),
               onChanged: (value) {
-                if (value != null) {
-                  controller.atualizarCidadeSelecionada(value);
-                }
+                if (value != null) controller.atualizarCidadeSelecionada(value);
               },
               selectedItem: controller.cidadeSelecionada(),
             ),
             Expanded(
-              child: Obx(() {
-                if (controller.isLoading.value) {
-                  return const CircularProgressIndicator(
-                    strokeWidth: 3.0,
-                    valueColor: AlwaysStoppedAnimation(Colors.blue),
-                  );
-                } else if (controller.climaData.value != null) {
-                  return TempoWidget(climaData: controller.climaData.value!);
-                } else {
-                  return Text(
-                    'Sem dados para exibir',
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  );
-                }
-              }),
+              child: Obx(
+                () {
+                  if (controller.isLoading.value) {
+                    return const CircularProgressIndicator(
+                      strokeWidth: 3.0,
+                      valueColor: AlwaysStoppedAnimation(Colors.blue),
+                    );
+                  } else if (controller.climaData.value != null) {
+                    return TempoWidget(climaData: controller.climaData.value!);
+                  } else {
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Sem dados para exibir',
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ],
+                    );
+                  }
+                },
+              ),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),

@@ -1,46 +1,10 @@
-import 'dart:convert';
-
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:projeto_uniclima_v2/model/clima_model.dart';
+import 'package:projeto_uniclima_v2/modules/modulo_home/controller/mixin/home.mixin.dart';
+import 'package:projeto_uniclima_v2/widgets/alerts/clima_error.alert.dart';
 
-class HomeController extends GetxController {
-  final List<String> cidades = [
-    'Aracaju',
-    'Belém',
-    'Belo Horizonte',
-    'Boa Vista',
-    'Brasilia',
-    'Campo Grande',
-    'Cuiaba',
-    'Curitiba',
-    'Florianópolis',
-    'Fortaleza',
-    'Goiânia',
-    'João Pessoa',
-    'Macapá',
-    'Maceió',
-    'Manaus',
-    'Natal',
-    'Palmas',
-    'Porto Alegre',
-    'Porto Velho',
-    'Recife',
-    'Rio Branco',
-    'Rio de Janeiro',
-    'Salvador',
-    'São Luiz',
-    'São Paulo',
-    'Teresina',
-    'Vitoria',
-  ];
-
-  RxString cidadeSelecionada = 'São Paulo'.obs;
-  RxBool isLoading = false.obs;
-  Rx<ClimaData?> climaData = Rx<ClimaData?>(null);
-  Dio dio = Dio();
-
+class HomeController extends GetxController with HomeMixin {
   @override
   void onInit() {
     super.onInit();
@@ -54,37 +18,18 @@ class HomeController extends GetxController {
 
   Future<void> carregaTempo() async {
     isLoading.value = true;
-
-    const String appid =
-        '65d7bbf43a1a218d1c43d651e08c6e64'; //Coloque aqui a SUA chave de API
-    const String lang = 'pt_br';
-    const String units = 'metric';
-    const String apiURL = 'api.openweathermap.org';
-    const String path = '/data/2.5/weather';
-    final params = {
-      "q": cidadeSelecionada.value,
-      "appid": appid,
-      "units": units,
-      "lang": lang
-    };
-
-    try {
-      final response =
-          await dio.get(Uri.https(apiURL, path, params).toString());
-
-      if (kDebugMode) {
-        print('Url montada: ${response.requestOptions.uri}');
-      }
-
-      if (response.statusCode == 200) {
-        climaData.value = ClimaData.fromJson(jsonDecode(response.data));
-      }
-    } catch (error) {
-      if (kDebugMode) {
-        print('Erro ao carregar o clima: $error');
-      }
-    }
-
+    ClimaData? mClimas = await repository.carregaTempo(cidadeSelecionada.value);
     isLoading.value = false;
+    if (mClimas == null) {
+      ClimaErrorAlert(
+        title: "Error".tr,
+        body: Text(
+          "Houve erro ao consultar Clima do ponto extra.".tr,
+        ),
+      );
+    } else {
+      climaData.value = mClimas;
+      climaData.refresh();
+    }
   }
 }

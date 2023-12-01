@@ -11,7 +11,7 @@ void main() {
 }
 
 class TempoApp extends StatelessWidget {
-  const TempoApp({Key? key}) : super(key: key);
+  const TempoApp({super.key});
 
   @override
   Widget build(BuildContext context) {
