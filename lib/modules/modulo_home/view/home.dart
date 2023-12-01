@@ -11,13 +11,19 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(controller.cidadeSelecionada()),
+        title: Text(controller.cidadeSelecionada(),
+            style: const TextStyle(color: Colors.white)),
         centerTitle: true,
       ),
       body: Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            DropdownSearch<String>(
+            SizedBox(
+              height: Get.height * 0.05,
+            ),
+            DropdownSearch(
               popupProps: PopupProps.menu(
                 showSelectedItems: true,
                 disabledItemFn: (String s) => s.startsWith('I'),
@@ -26,6 +32,8 @@ class HomeView extends GetView<HomeController> {
               dropdownDecoratorProps: DropDownDecoratorProps(
                 dropdownSearchDecoration: InputDecoration(
                   labelText: "Cidade",
+                  labelStyle: const TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
                   hintText: 'Selecione a cidade',
                   filled: true,
                   fillColor: Theme.of(context).inputDecorationTheme.fillColor,
@@ -47,7 +55,13 @@ class HomeView extends GetView<HomeController> {
                       valueColor: AlwaysStoppedAnimation(Colors.blue),
                     );
                   } else if (controller.climaData.value != null) {
-                    return TempoWidget(climaData: controller.climaData.value!);
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        TempoWidget(climaData: controller.climaData.value!),
+                      ],
+                    );
                   } else {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.center,
