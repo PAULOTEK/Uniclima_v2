@@ -20,7 +20,7 @@ extension ClimaRepositoryEndpointExtension on ClimaRepositoryEndpoint {
   String get url {
     switch (this) {
       case ClimaRepositoryEndpoint.API_DATA:
-        return "/data/3.0/weather";
+        return "data/2.5/weather?";
       default:
         throw ("URL API NOT DEFINED");
     }

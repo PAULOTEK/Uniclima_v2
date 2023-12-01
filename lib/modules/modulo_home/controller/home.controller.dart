@@ -20,11 +20,13 @@ class HomeController extends GetxController with HomeMixin {
     isLoading.value = true;
     ClimaData? mClimas = await repository.carregaTempo(cidadeSelecionada.value);
     isLoading.value = false;
+
     if (mClimas == null) {
+      print('Erro ao carregar o clima. Resposta nula.');
       ClimaErrorAlert(
         title: "Error".tr,
         body: Text(
-          "Houve erro ao consultar Clima do ponto extra.".tr,
+          "Houve erro ao consultar o clima do ponto extra.".tr,
         ),
       );
     } else {

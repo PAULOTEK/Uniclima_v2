@@ -1,12 +1,11 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:projeto_uniclima_v2/config/configs.dart';
 import 'package:projeto_uniclima_v2/model/clima_model.dart';
 import 'package:projeto_uniclima_v2/repository/repositories/clima_repository.dart';
 
-class HomeRespository extends ClimaRepository {
+class HomeRepository extends ClimaRepository {
+  final Dio _dio = Dio();
   Future<ClimaData?> carregaTempo(String cidadeSelecionada) async {
     const String lang = 'pt_br';
     const String units = 'metric';
@@ -15,24 +14,24 @@ class HomeRespository extends ClimaRepository {
       "q": cidadeSelecionada,
       "appid": keyOpenweathermap,
       "units": units,
-      "lang": lang
+      "lang": lang,
     };
 
     try {
-      Response? response = await httpClient
-          .get("${ClimaRepositoryEndpoint.API_DATA.url} $params");
+      final Uri uri = Uri.parse("$baseUrl/data/2.5/weather")
+          .replace(queryParameters: params);
+
+      Response? response = await _dio.get(uri.toString());
 
       if (kDebugMode) {
         print('Url montada: ${response.requestOptions.uri}');
       }
-
-      if (response.statusCode == 200) {
-        return ClimaData.fromJson(jsonDecode(response.data));
-      }
+      return ClimaData.fromJson2(response.data);
     } catch (error) {
       if (kDebugMode) {
         print('Erro ao carregar o clima: $error');
       }
+      return null;
     }
   }
 }

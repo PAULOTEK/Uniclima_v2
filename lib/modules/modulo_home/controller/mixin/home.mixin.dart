@@ -6,7 +6,7 @@ import 'package:projeto_uniclima_v2/modules/modulo_home/repository/home.reposito
 mixin HomeMixin {
   RxString cidadeSelecionada = 'São Paulo'.obs;
   RxBool isLoading = false.obs;
-  final repository = HomeRespository();
+  final repository = HomeRepository();
   Rx<ClimaData?> climaData = Rx<ClimaData?>(null);
   Dio dio = Dio();
   final List<String> cidades = [

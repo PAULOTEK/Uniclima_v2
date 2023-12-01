@@ -18,7 +18,7 @@ class TempoWidget extends StatelessWidget {
           style: const TextStyle(fontSize: 50.0),
         ),
         Text(
-          climaData?.descTemp ?? "",
+          climaData?.descTemp?.toUpperCase() ?? "",
           style: const TextStyle(fontSize: 30.0),
           textAlign: TextAlign.center,
         ),

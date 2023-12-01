@@ -27,7 +27,7 @@ class TempoApp extends StatelessWidget {
       getPages: PagesRoutes.pagesRoutes,
       //translations: CompartMessages(),
       initialBinding: InitialBindings(),
-      initialRoute: Routes.splash,
+      initialRoute: Routes.home,
     );
   }
 }

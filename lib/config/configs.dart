@@ -7,4 +7,4 @@ const baseUrl =
     kDebugMode ? EnvironmentConfig.devUrl : EnvironmentConfig.prodUrl;
 
 const urlUserData = 'profile';
-const keyOpenweathermap = '65d7bbf43a1a218d1c43d651e08c6e64';
+const keyOpenweathermap = 'bf6d2fe11b800f9f57d608aaf6957478';

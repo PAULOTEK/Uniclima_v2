@@ -27,6 +27,17 @@ class ClimaData {
         icon: json['weather'][0]['icon'],
         humidity: json['main']['humidity'].toInt());
   }
+  ClimaData.fromJson2(Map<String, dynamic> json) {
+    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
+    temp = json['main']['temp'].toDouble();
+    tempMin = json['main']['temp_min'].toDouble();
+    tempMax = json['main']['temp_max'].toDouble();
+    feelsLike = json['main']['feels_like'].toDouble();
+    descTemp = capitalize(json['weather'][0]['description']);
+    icon = json['weather'][0]['icon'];
+    humidity = json['main']['humidity'].toInt();
+  }
   static List<ClimaData> listFromJsonArray(List<dynamic> list) {
     return list.map<ClimaData>((json) => ClimaData.fromJson(json)).toList();
   }

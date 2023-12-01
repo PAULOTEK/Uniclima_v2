@@ -71,9 +71,9 @@ class CustomInterceptors extends InterceptorsWrapper {
     return handler.next(err);
   }
 
-  String getToken(String token) {
-    return 'Bearer $token';
-  }
+  // String getToken(String token) {
+  //   return 'Bearer $token';
+  // }
 }
 
 class BadRequestException extends DioError {
